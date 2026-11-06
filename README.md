@@ -141,20 +141,10 @@ En todos los ejemplos se usa la misma lista de 12 peliculas:
 | Joker | Drama | 2019 | 122 | 8.4 |
 | La La Land | Romance | 2016 | 128 | 8.0 |
 
-```scala
-case class Producto(nombre: String, categoria: String, precio: Double, stock: Int)
-
-val productos = List(
-  Producto("...", "...", 0.0, 0)
-  // completa con 10 a 15 elementos
-)
-```
-
-> Los equivalentes en Java y Python están en las carpetas [`java/`](java/) y [`python/`](python/).
 
 ### 3.1 Catálogo de tipos de problemas
 
-Se documentan [4 a 7] de los siguientes tipos:
+Se documentan 4 a 7 de los siguientes tipos:
 
 | Tipo de problema | Pregunta que responde | Operaciones típicas |
 |---|---|---|
@@ -168,206 +158,233 @@ Se documentan [4 a 7] de los siguientes tipos:
 
 ---
 
-#### 3.1.1 Selección (`filter`)
-
-**Situación real:** [Ejemplo concreto]
+### Lista de datos utilizada en Scala, Python y Java
 
 **Scala**
 ```scala
-// Código
+case class Pelicula(titulo: String, genero: String, anio: Int, duracion: Int, calificacion: Double)
 ```
 
 **Java**
 ```java
-// Código con Streams
+record Pelicula(String titulo, String genero, int anio, int duracion, double calificacion) {}
 ```
 
 **Python**
 ```python
-# Código con lambda
+@dataclass
+class Pelicula:
+    titulo: str
+    genero: str
+    anio: int
+    duracion: int
+    calificacion: float
 ```
 
-**Salida de cada versión**
+#### 3.1.1 Selección (`filter`)
 
-| Scala | Java | Python |
-|---|---|---|
-| ![Scala](img/seleccion_scala.png) | ![Java](img/seleccion_java.png) | ![Python](img/seleccion_python.png) |
+**Situación real:** una plataforma de streaming quiere mostrar en su página principal solo las películas mejor valoradas (calificación de 8.5 o más).
 
----
+**Scala**
+```scala
+val mejores = peliculas.filter(p => p.calificacion >= 8.5).map(_.titulo)
+```
+
+**Java**
+```java
+List<String> mejores = peliculas.stream()
+    .filter(p -> p.calificacion() >= 8.5)
+    .map(Pelicula::titulo)
+    .collect(Collectors.toList());
+```
+
+**Python**
+```python
+mejores = list(filter(lambda p: p.calificacion >= 8.5, peliculas))
+print([p.titulo for p in mejores])
+```
 
 #### 3.1.2 Transformación (`map`)
 
-**Situación real:** [...]
+**Situación real:** el catálogo muestra los títulos en mayúsculas en los banners de la aplicación, por lo que hay que convertir cada título.
 
 **Scala**
 ```scala
+val titulos = peliculas.map(p => p.titulo.toUpperCase)
 ```
 
 **Java**
 ```java
+List<String> titulos = peliculas.stream()
+    .map(p -> p.titulo().toUpperCase())
+    .collect(Collectors.toList());
 ```
 
 **Python**
 ```python
+titulos = list(map(lambda p: p.titulo.upper(), peliculas))
 ```
-
-**Salida de cada versión**
-
-| Scala | Java | Python |
-|---|---|---|
-| ![Scala](img/transformacion_scala.png) | ![Java](img/transformacion_java.png) | ![Python](img/transformacion_python.png) |
-
----
 
 #### 3.1.3 Validación (`exists`, `forall`)
 
-**Situación real:** [...]
+**Situación real:** antes de publicar una promoción, el equipo de contenido necesita saber si existe alguna película con calificación mayor a 9 y si todas son posteriores a 1990.
+
 
 **Scala**
 ```scala
+val hayMayorA9 = peliculas.exists(p => p.calificacion > 9)
+val todasDesde1990 = peliculas.forall(p => p.anio >= 1990)
 ```
 
 **Java**
 ```java
+boolean hayMayorA9 = peliculas.stream().anyMatch(p -> p.calificacion() > 9);
+boolean todasDesde1990 = peliculas.stream().allMatch(p -> p.anio() >= 1990);
 ```
 
 **Python**
 ```python
+hay_mayor_a_9 = any(p.calificacion > 9 for p in peliculas)
+todas_desde_1990 = all(p.anio >= 1990 for p in peliculas)
 ```
-
-**Salida de cada versión**
-
-| Scala | Java | Python |
-|---|---|---|
-| ![Scala](img/validacion_scala.png) | ![Java](img/validacion_java.png) | ![Python](img/validacion_python.png) |
-
----
 
 #### 3.1.4 Conteo (`count`)
 
-**Situación real:** [...]
+**Situación real:** el equipo de marketing necesita saber cuántas películas de animación hay en el catálogo para preparar una sección familiar.
 
 **Scala**
 ```scala
+val cantidad = peliculas.count(p => p.genero == "Animación")
 ```
 
 **Java**
 ```java
+long cantidad = peliculas.stream()
+    .filter(p -> p.genero().equals("Animación"))
+    .count();
 ```
 
 **Python**
 ```python
+cantidad = len(list(filter(lambda p: p.genero == "Animación", peliculas)))
 ```
-
-**Salida de cada versión**
-
-| Scala | Java | Python |
-|---|---|---|
-| ![Scala](img/conteo_scala.png) | ![Java](img/conteo_java.png) | ![Python](img/conteo_python.png) |
-
----
-
-<!-- Copia el mismo formato para Extremos (3.1.5), Aplanamiento (3.1.6) y Acumulación (3.1.7) si los documentas. Si no, elimina este comentario. -->
-
----
 
 ## Parte 4 - Ampliar: Cuatro operaciones nuevas.
 
-Las operaciones elegidas son: **[operación 1]**, **[operación 2]**, **[operación 3]** y **[operación 4]**.
-Código completo en [`operaciones/`](operaciones/).
+Las operaciones elegidas son **`sortBy`**, **`groupBy`**, **`find`** y **`partition`**. Todas se prueban con la misma lista de películas de la Parte 3.
 
-### 4.1 Ficha: `[operación 1]`
+### 4.1 Ficha: `sortBy`
 
 | Campo | Descripción |
 |---|---|
-| **Qué hace** | [Una o dos líneas con tus palabras] |
-| **Lambda que recibe** | [Qué recibe y qué debe devolver. Si no recibe lambda, indica con qué operación se encadena] |
-| **Problema que resuelve** | [Situación real y tipo de problema de la sección 3.1, o si es un tipo nuevo] |
+| **Qué hace** | Ordena la lista de menor a mayor según un valor que se calcula de cada elemento. |
+| **Lambda que recibe** | Recibe un elemento y devuelve el valor por el que se ordena (un número, un texto, etc.). No devuelve `Boolean`. |
+| **Problema que resuelve** | Una plataforma quiere mostrar las películas de la más corta a la más larga. Es un tipo de problema nuevo de ordenamiento, que no está en la tabla de la sección 3.1. |
 
 **Ejemplo en Scala**
 ```scala
-// Usa la misma lista de productos de la Parte 3
+val porDuracion = peliculas.sortBy(p => p.duracion).map(p => (p.titulo, p.duracion))
 ```
 
 **Salida**
 ```text
-[Pega aquí la salida]
+List((Toy Story,81), (Shrek,90), (Coco,105), (Joker,122), (La La Land,128), (Parásitos,132), (Matrix,136), (Inception,148), (Gladiador,155), (Interestelar,169), (El Padrino,175), (Titanic,195))
 ```
 
-### 4.2 Ficha: `[operación 2]`
+Para ordenar de mayor a menor se puede devolver el valor negativo: `sortBy(p => -p.duracion)`.
+
+### 4.2 Ficha: `groupBy`
 
 | Campo | Descripción |
 |---|---|
-| **Qué hace** | [...] |
-| **Lambda que recibe** | [...] |
-| **Problema que resuelve** | [...] |
+| **Qué hace** | Reúne los elementos en grupos según una clave. Devuelve un `Map` donde cada clave apunta a la lista de elementos que le corresponden. |
+| **Lambda que recibe** | Recibe un elemento y devuelve la clave del grupo (aquí, el género). |
+| **Problema que resuelve** | El equipo de marketing quiere saber cuántas películas hay de cada género. Es un tipo de problema nuevo de agrupación. |
 
 **Ejemplo en Scala**
 ```scala
+val porGenero = peliculas.groupBy(p => p.genero)
+val cantidadPorGenero = porGenero
+  .map { case (genero, lista) => (genero, lista.size) }
+  .toList
+  .sortBy(_._1)
 ```
 
 **Salida**
 ```text
+List((Acción,1), (Animación,3), (Ciencia ficción,3), (Drama,2), (Romance,2), (Suspenso,1))
 ```
 
-### 4.3 Ficha: `[operación 3]`
+El `Map` que devuelve `groupBy` no garantiza el orden de sus claves. Por eso se pasa a lista y se ordena por nombre (con `sortBy`) para que la salida sea siempre la misma.
+
+### 4.3 Ficha: `find`
 
 | Campo | Descripción |
 |---|---|
-| **Qué hace** | [...] |
-| **Lambda que recibe** | [...] |
-| **Problema que resuelve** | [...] |
+| **Qué hace** | Devuelve la primera película que cumple una condición. Como puede no haber ninguna, el resultado es `Some(elemento)` o `None`. |
+| **Lambda que recibe** | Recibe un elemento y devuelve un `Boolean`, como `filter`. |
+| **Problema que resuelve** | Se necesita encontrar la primera película de romance del catálogo para recomendarla. Se parece al tipo **Selección** (`filter`), con la diferencia de que devuelve solo el primer resultado y no una lista. |
 
 **Ejemplo en Scala**
 ```scala
+val primeraRomance = peliculas.find(p => p.genero == "Romance")
+val sinResultado = peliculas.find(p => p.calificacion > 9.5)
 ```
 
 **Salida**
 ```text
+Some(Pelicula(Titanic,Romance,1997,195,7.9))
+None
 ```
 
-### 4.4 Ficha: `[operación 4]`
+### 4.4 Ficha: `partition`
 
 | Campo | Descripción |
 |---|---|
-| **Qué hace** | [...] |
-| **Lambda que recibe** | [...] |
-| **Problema que resuelve** | [...] |
+| **Qué hace** | Divide la lista en dos: los elementos que cumplen la condición y los que no, en una sola pasada. |
+| **Lambda que recibe** | Recibe un elemento y devuelve un `Boolean`. El resultado es una tupla `(cumplen, noCumplen)`. |
+| **Problema que resuelve** | Separar las películas largas (140 minutos o más) de las cortas para armar dos secciones. Se parece al tipo **Selección** (`filter`), pero conserva también los elementos que no cumplen. |
 
 **Ejemplo en Scala**
 ```scala
+val (largas, cortas) = peliculas.partition(p => p.duracion >= 140)
 ```
 
 **Salida**
 ```text
+largas: List(El Padrino, Interestelar, Gladiador, Titanic, Inception)
+cortas: List(Parásitos, Toy Story, Matrix, Coco, Shrek, Joker, La La Land)
 ```
 
 ### 4.5 Combinar operaciones
 
-**Pregunta:** [Pregunta sobre la lista que requiera varios pasos]
+**Pregunta:** ¿Qué géneros tienen 2 o más películas en el catálogo, ordenados de mayor a menor cantidad?
 
-**Cadena de operaciones** (dos operaciones nuevas y una vista en clase):
+**Cadena de operaciones** (dos nuevas: `groupBy` y `sortBy`; una vista en clase: `filter`):
 
 ```scala
-productos
-  .operacion1(...)   // paso 1
-  .operacion2(...)   // paso 2
-  .operacion3(...)   // paso 3
+val generosPopulares = peliculas
+  .groupBy(p => p.genero)                                    // nueva: agrupa por género
+  .map { case (genero, lista) => (genero, lista.size) }      // cuenta cuántas hay en cada grupo
+  .filter { case (_, cantidad) => cantidad >= 2 }            // vista en clase: se queda con 2 o más
+  .toList
+  .sortBy { case (genero, cantidad) => (-cantidad, genero) } // nueva: mayor a menor cantidad
 ```
 
 **Explicación paso a paso**
 
 | Paso | Operación | Qué hace |
 |---|---|---|
-| 1 | `[...]` | [...] |
-| 2 | `[...]` | [...] |
-| 3 | `[...]` | [...] |
+| 1 | `groupBy` | Separa las 12 películas en 6 grupos, uno por género. |
+| 2 | `map` | Reemplaza cada grupo por el par `(género, cantidad)`. |
+| 3 | `filter` | Descarta los géneros con una sola película (Acción y Suspenso). |
+| 4 | `toList` | Pasa el `Map` a lista, para poder ordenarla. |
+| 5 | `sortBy` | Ordena por cantidad de mayor a menor; si empatan, por nombre del género. |
 
 **Salida**
 ```text
-[Pega aquí la salida]
+List((Animación,3), (Ciencia ficción,3), (Drama,2), (Romance,2))
 ```
-
 ---
 
 ## Parte 5: Comparar y concluir
