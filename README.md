@@ -435,7 +435,8 @@ Las funciones anónimas constituyen una pieza fundamental en la programación mo
 1. Netflix Technology Blog, “Python at Netflix” (2019): https://medium.com/netflix-techblog/python-at-netflix-bba45dae649e
 2. TechRepublic, “How Netflix uses Python”: https://www.techrepublic.com/article/how-netflix-uses-python-streaming-giant-reveals-its-programming-language-libraries-and-frameworks/
 3. Oracle. Package java.util.stream (Java SE 8). https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
-4. Documentación oficial de Scala: https://docs.scala-lang.org
-5. Programación funcional en Python: https://docs.python.org/3/howto/functional.html
-6. Winitzki, S. *The Science of Functional Programming: A Tutorial, with Examples in Scala*. https://github.com/winitzki/sofp/releases/download/v2.2/sofp.pdf
-7. Herramientas de IA utilizadas: Claude (Anthropic), apoyo en la estructura del README e investigación de casos, Gemini: para ayuda en la redacción
+4. O’Connor, J. J. y Robertson, E. F. Alonzo Church. MacTutor History of Mathematics Archive, Universidad de St Andrews. https://mathshistory.st-andrews.ac.uk/~history/Biographies/Church.html
+5. Documentación oficial de Scala: https://docs.scala-lang.org
+6. Programación funcional en Python: https://docs.python.org/3/howto/functional.html
+7. Winitzki, S. *The Science of Functional Programming: A Tutorial, with Examples in Scala*. https://github.com/winitzki/sofp/releases/download/v2.2/sofp.pdf
+8. Herramientas de IA utilizadas: Claude (Anthropic), apoyo en la estructura del README e investigación de casos, Gemini: para ayuda en la redacción
