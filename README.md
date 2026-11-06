@@ -425,7 +425,7 @@ Las funciones anónimas constituyen una pieza fundamental en la programación mo
 ├── java/            # Soluciones de la Parte 3
 ├── python/          # Soluciones de la Parte 3
 ├── operaciones/     # 4 operaciones nuevas y combinación (Parte 4)
-└── img/             # Capturas de ejecución y tablas
+└── img/             # Capturas de ejecución
 ```
 
 ---
