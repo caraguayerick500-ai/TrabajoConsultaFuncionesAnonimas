@@ -30,7 +30,7 @@
 | **Lenguaje o herramienta** | Python |
 | **Ventaja del enfoque funcional** | Analizar muchos datos rápido y con poco código, sin armar herramientas desde cero. |
 | **Fuente consultada** | Netflix Technology Blog, “Python at Netflix”, y TechRepublic, “How Netflix uses Python” |
-###  FALTAA
+
 ### Caso 2: Streams de Java
 
 | Aspecto | Descripción |
@@ -393,50 +393,28 @@ List((Animación,3), (Ciencia ficción,3), (Drama,2), (Romance,2))
 
 | Criterio | Scala | Java | Python |
 |---|---|---|---|
-| **Sintaxis de la lambda** | [...] | [...] | [...] |
-| **Cómo se declara el tipo** | [...] | [...] | [...] |
-| **Operaciones con listas disponibles** | [...] | [...] | [...] |
-| **Restricción del lenguaje** | [...] | [...] | [...] |
-| **Legibilidad (opinión)** | [...] | [...] | [...] |
+| **Sintaxis de la lambda** | Muy precisa usa flechas (x => x.precio > 10) o  (_.precio > 10). | Utiliza una flecha con sintaxis tipada (p -> p.getPrecio() > 10). | Emplea la palabra clave explícita (lambda x: x.precio > 10). |
+| **Cómo se declara el tipo** | Mediante inferencia de tipos automática del compilador (ej. (x: Int) es opcional si el contexto lo deduce). | El compilador deduce el tipo según la interfaz funcional del contexto (Stream) | No se declaran tipos. Al ser de tipado dinámico, los parámetros de una lambda no llevan definición de tipo |
+| **Operaciones con listas disponibles** | Nativas, amplias y muy completas directamente en las colecciones (map, filter, groupBy, etc.). | stream().filter(), collect(), etc.). | Disponibles mediante funciones integradas (map, filter) o la librería estándar (functools). |
+| **Restricción del lenguaje** | Requiere tipado estricto, aunque es muy fácil de aprender. | Las lambdas están limitadas a interfaces funcionales de un solo método abstracto | Las funciones lambda están estrictamente limitadas a una sola expresión (no admiten bloques de código multilínea). |
+| **Legibilidad (opinión)** | Mucho más fácil, limpia y expresiva gracias a su diseño funcional nativo y su sintaxis minimalista. | Moderada; aunque los Streams mejoran el código, sigue siendo más largo el programar por las reglas de Java. | Es fácil en casos simples, pero puede volverse compleja o menos limpia al anidar múltiples operaciones funcionales. |
 
 **¿En qué lenguaje fue más natural resolver los problemas?**
 
-[Respuesta]
+Fue Scala. Las operaciones sobre listas y el uso de funciones anónimas fluyen de manera natural, con un código muy limpio y sin necesidad de escribir código repetitivo
 
 **¿En qué tipo de problema encontraste más diferencias entre lenguajes y por qué?**
 
-[Respuesta con evidencia de tu propio código; enlaza la sección de la Parte 3 que corresponda]
+Las mayores diferencias se encontraron en los problemas de acumulación y reducción (foldLeft/reduce) y agrupación (groupBy).
+
+Por qué, mientras que en Scala y Python estas operaciones se resuelven de forma directa y compacta con métodos nativos o funciones integradas, en Java se requiere utilizar la API de Streams junto con recolectores específicos (Collectors.groupingBy o acumuladores de reduce), lo que vuelve la sintaxis considerablemente más larga y estructurada, lo que la hace difícil de comprender
 
 ### 5.2 Conclusión
 
-[Uno o dos párrafos: qué importancia tienen las funciones anónimas en la solución de problemas con listas, relacionándolo con al menos uno de los casos reales de la [Parte 1](#parte-1-explorar).]
+Las funciones anónimas constituyen una pieza fundamental en la programación moderna al permitir tratar el comportamiento y la lógica como un dato manipulable dentro de las operaciones con listas y estructuras de datos. Este enfoque cambia el paradigma de una programación imperativa hacia una declarativa, donde el foco se centra en qué transformar en lugar de cómo iterar manualmente cada elemento. Tal como se demuestra en el caso real de Netflix, su equipo CORE utiliza el ecosistema funcional de Python con librerías como pandas para automatizar la evaluación de miles de señales cuando sus sistemas de alerta detectan un fallo. En este tipo de escenarios, el uso de funciones anónimas y transformaciones declarativas permite procesar grandes volúmenes de datos de forma ágil y con un volumen mínimo de código, evitando la necesidad de construir herramientas complejas desde cero. En definitiva, la adopción de estas operaciones promueve la creación de sistemas más concisos, mantenibles y expresivos, reduciendo errores comunes de estado mutable y optimizando la resolución de problemas en entornos de producción a gran escala.
 
 ---
 
-## Cómo ejecutar el código
-
-### Scala
-```bash
-cd scala
-scala NombreDelArchivo.scala
-```
-
-### Java
-```bash
-cd java
-javac NombreDelArchivo.java
-java NombreDelArchivo
-```
-
-### Python
-```bash
-cd python
-python nombre_del_archivo.py
-```
-
-> Requisitos: [Scala x.x, JDK 17+, Python 3.x]. Ajusta los comandos según tu entorno.
-
----
 
 ## Estructura del repositorio
 
@@ -456,12 +434,8 @@ python nombre_del_archivo.py
 
 1. Netflix Technology Blog, “Python at Netflix” (2019): https://medium.com/netflix-techblog/python-at-netflix-bba45dae649e
 2. TechRepublic, “How Netflix uses Python”: https://www.techrepublic.com/article/how-netflix-uses-python-streaming-giant-reveals-its-programming-language-libraries-and-frameworks/
-
 3. Oracle. Package java.util.stream (Java SE 8). https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
-4. 
-
-5. Documentación oficial de Scala: https://docs.scala-lang.org
-6. Expresiones lambda en Java: https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
-7. Programación funcional en Python: https://docs.python.org/3/howto/functional.html
-8. Winitzki, S. *The Science of Functional Programming: A Tutorial, with Examples in Scala*. https://github.com/winitzki/sofp/releases/download/v2.2/sofp.pdf
-9. Herramientas de IA utilizadas: Claude (Anthropic), apoyo en la estructura del README e investigación de casos
+4. Documentación oficial de Scala: https://docs.scala-lang.org
+5. Programación funcional en Python: https://docs.python.org/3/howto/functional.html
+6. Winitzki, S. *The Science of Functional Programming: A Tutorial, with Examples in Scala*. https://github.com/winitzki/sofp/releases/download/v2.2/sofp.pdf
+7. Herramientas de IA utilizadas: Claude (Anthropic), apoyo en la estructura del README e investigación de casos, Gemini: para ayuda en la redacción
