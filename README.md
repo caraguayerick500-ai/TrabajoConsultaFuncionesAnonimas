@@ -342,7 +342,7 @@ None
 | Campo | Descripción |
 |---|---|
 | **Qué hace** | Divide la lista en dos: los elementos que cumplen la condición y los que no, en una sola pasada. |
-| **Lambda que recibe** | Recibe un elemento y devuelve un `Boolean`. El resultado es una tupla `(cumplen, noCumplen)`. |
+| **Lambda que recibe** | Recibe un elemento y devuelve el elemento clasificado. El resultado es una tupla `(cumplen, noCumplen)`. |
 | **Problema que resuelve** | Separar las películas largas (140 minutos o más) de las cortas para armar dos secciones. Se parece al tipo **Selección** (`filter`), pero conserva también los elementos que no cumplen. |
 
 **Ejemplo en Scala**
